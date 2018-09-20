@@ -8,6 +8,7 @@ Created on Mon Sep 18 21:31:49 2018
 import os
 import math
 import datetime
+import gc
 
 import numpy as np
 import pandas as pd
@@ -197,6 +198,7 @@ def build_model(input_shape=None, fdl_nodes=128, sdl_nodes=0, use_dense_dropout=
 
     return model
 
+# commented out - already have data - GPU memory crash - hopefully fixed by cleanup at end of loop
 # factors for a 4 level box-behnken design
 #       [-1., -1.,  0.,  0.],
 #       [ 1., -1.,  0.,  0.],
@@ -293,5 +295,7 @@ with tf.device('/gpu:0'):
         
         try:
             K.clear_session()  # https://github.com/keras-team/keras/issues/2102
+            del model, history, data, temp
+            gc.collect()
         except:
-            pass
+            print('EXCEPTION in model cleanup!')
