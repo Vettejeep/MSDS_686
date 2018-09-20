@@ -198,20 +198,20 @@ def build_model(input_shape=None, fdl_nodes=128, sdl_nodes=0, use_dense_dropout=
 
     return model
 
-# commented out - already have data - GPU memory crash - hopefully fixed by cleanup at end of loop
 # factors for a 4 level box-behnken design
-#       [-1., -1.,  0.,  0.],
-#       [ 1., -1.,  0.,  0.],
-#       [-1.,  1.,  0.,  0.],
-#       [ 1.,  1.,  0.,  0.],
-#       [-1.,  0., -1.,  0.],
-#       [ 1.,  0., -1.,  0.],
-#       [-1.,  0.,  1.,  0.],
-#       [ 1.,  0.,  1.,  0.],
-#       [-1.,  0.,  0., -1.],
-#       [ 1.,  0.,  0., -1.],
 
-doe = [[-1.,  0.,  0.,  1.],
+
+doe = [[-1., -1.,  0.,  0.],
+       [ 1., -1.,  0.,  0.],
+       [-1.,  1.,  0.,  0.],
+       [ 1.,  1.,  0.,  0.],
+       [-1.,  0., -1.,  0.],
+       [ 1.,  0., -1.,  0.],
+       [-1.,  0.,  1.,  0.],
+       [ 1.,  0.,  1.,  0.],
+       [-1.,  0.,  0., -1.],
+       [ 1.,  0.,  0., -1.],
+       [-1.,  0.,  0.,  1.],
        [ 1.,  0.,  0.,  1.],
        [ 0., -1., -1.,  0.],
        [ 0.,  1., -1.,  0.],
@@ -234,7 +234,7 @@ sl_def = (48, 16)
 decay_def = (0.0005, 0.0005)  # no momentum for adam
 
 df = None
-i = 11
+i = 1
 
 with tf.device('/gpu:0'):
     for w, x, y, z in doe:
@@ -242,7 +242,7 @@ with tf.device('/gpu:0'):
         lr = lr_def[0] + (lr_def[1] * w)
         fl = int(fl_def[0] + (fl_def[1] * x))
         sl = int(sl_def[0] + (sl_def[1] * y))
-        d = int(decay_def[0] + (decay_def[1] * z) )
+        d = decay_def[0] + (decay_def[1] * z)
     
         np.random.seed(seed)
         print('Learning Rate: %.6f, FL Nodes: %d, SL Nodes: %d, decay: %.6f, iter: %d' % (lr, fl, sl, d, i))
@@ -295,7 +295,5 @@ with tf.device('/gpu:0'):
         
         try:
             K.clear_session()  # https://github.com/keras-team/keras/issues/2102
-            del model, history, data, temp
-            gc.collect()
         except:
             print('EXCEPTION in model cleanup!')
