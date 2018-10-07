@@ -196,7 +196,7 @@ with tf.device('/gpu:0'):
 			# save model weights
             try:
                 # https://machinelearningmastery.com/save-load-keras-deep-learning-models/
-                weights_path = os.path.join(data_path, 'weights_mx_l2_70_30_%d.csv' % i)
+                weights_path = os.path.join(data_path, 'weights_mx_l2_70_30_%d.h5' % i)
                 model.save_weights(weights_path)
                 print("Saved model to disk")
             except:
