@@ -34,7 +34,7 @@ for n in plant_names:
 # copy the plant files
 for n in plant_names:
     p = os.path.join(base, src, n)
-    files = os. listdir(p)
+    files = os.listdir(p)
     random.shuffle(files)
     
     for fname in files[0:int(len(files)*.7)]:
