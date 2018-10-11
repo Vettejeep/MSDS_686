@@ -3,7 +3,7 @@
 Created on Mon Sep 17 21:31:49 2018
 @author: Kevin Maher
 """
-# early pooor performing model for the project
+# early poor performing model for the project
 # it got a lot better with time and experience!
 
 import os
