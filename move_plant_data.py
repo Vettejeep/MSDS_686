@@ -2,7 +2,7 @@
 """
 Created on Mon Sep 17 21:07:37 2018
 
-@author: Vette
+@author: Kevin Maher
 """
 import os
 import shutil
