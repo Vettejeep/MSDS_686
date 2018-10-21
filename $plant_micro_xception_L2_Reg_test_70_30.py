@@ -233,8 +233,6 @@ np.random.seed(seed)
 df = None
 
 with tf.device('/gpu:0'):
-    model = build_model(input_shape=(im_size, im_size, 3))
-    
     for i in range(LAST_EPOCH + 1, EPOCHS+1):
         j = i-1
         history = model.fit_generator(train_generator,

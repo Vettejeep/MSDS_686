@@ -234,8 +234,6 @@ np.random.seed(seed)
 df = None
 
 with tf.device('/gpu:0'):
-    model = build_model(input_shape=(im_size, im_size, 3))
-
     accs = []
     losses = []
     val_accs = []

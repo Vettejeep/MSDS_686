@@ -272,17 +272,6 @@ np.random.seed(seed)
 df = None
 
 with tf.device('/gpu:0'):
-    model = build_model(input_shape=(im_size, im_size, 3))
-    
-    # load model unless starting epoch from zero
-    # had problems with json, so create model from function and load weights if needed
-    # https://machinelearningmastery.com/save-load-keras-deep-learning-models/
-    # https://www.reddit.com/r/learnmachinelearning/comments/7xo7zj/keras_wont_load_model_driving_me_nuts/
-    # load weights into new model
-    # p_mdl = os.path.join(data_path, -->substitute model name here)
-    # model.load_weights(p_mdl)
-    # print("Loaded model from disk")
-    
     for i in range(LAST_EPOCH + 1, EPOCHS+1):
         j = i-1
         history = model.fit_generator(train_generator,
